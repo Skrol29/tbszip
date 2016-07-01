@@ -255,7 +255,7 @@ Change log
 ----------
 
 Version 2.16, date: 2014-04-08
-* bug fixe: could not download a file that has the same name as the opened archive.
+* bug fix: could not download a file that has the same name as the opened archive.
 
 Version 2.15, date:  2013-10-15
 * Archives with comment can now be opened by TbsZip.
@@ -266,49 +266,49 @@ Version 2.14, date:  2013-06-11
 * can open an archive from a PHP file handle
 
 Version 2.13, date: 2013-04-14
-* new  method ˋFileGetState()ˋ
+* new  method `FileGetState()`
 
 Version 2.12, date: 2013-03-16
 * bug fixed: may produce a corrupted archive when the original was using data descriptors without the signature.
-* minor enhancement: new argument ˋ$UseIncludePathˋ.
+* minor enhancement: new argument `$UseIncludePath`.
 * minor enhancement: debug mode is smarter.
 
 Version 2.11, date: 2011-02-14
-* bug fixed: method ˋFileCancelModif()ˋ doesn't cancel added files.
+* bug fixed: method `FileCancelModif()` doesn't cancel added files.
 
 Version 2.10, date: 2011-08-13
 * bug fixed: PHP warning *"Notice: Undefined variable: AddDataLen..."* happens when deleting a file whitout adding any file.
 
 Version 2.9, date: 2011-07-22
-* bug fixed: a minor bug on ˋFileRead()ˋ when the asked file does not exists.
+* bug fixed: a minor bug on `FileRead()` when the asked file does not exists.
 
 Version 2.8, date: 2011-06-08
 * bug fixed: PHP warning *"Warning: fclose(): 10 is not a valid stream resource"* may happen when closing an archive twice.
 
 Version 2.7, date: 2011-06-07
-* bug fixed: PHP error *"supplied argument is not a valid stream resource"* or *"Undefined property: clsOpenTBS::$OutputHandle"* may happen when using method ˋFlush()ˋ.
+* bug fixed: PHP error *"supplied argument is not a valid stream resource"* or *"Undefined property: clsOpenTBS::$OutputHandle"* may happen when using method `Flush()`.
 
 Version 2.6, date: 2011-06-07
-* minor enhancement: now raise a TbsZip error if ˋFlush()ˋ attempts to overwrite a locked file.
+* minor enhancement: now raise a TbsZip error if `Flush()` attempts to overwrite a locked file.
 
 Version 2.5, date: 2011-05-12
 * minor bug fixed: strict compatibility with PHP 5 (no PHP warning with error reporting E_STRICT)
 
 Version 2.4, date: 2011-03-25
-* minor bug fixed: the new created archive using ˋFlush()ˋ was not unlocked at the end of the flush. The clsTbsZip instance had still an handle on it.
-* minor enhancement: now raise a TbsZip error if ˋFlush()ˋ attempts to overwrite the current archive.
-* minor enhancement: property ˋDisplayErrorˋ is set to true by default.
+* minor bug fixed: the new created archive using `Flush()` was not unlocked at the end of the flush. The clsTbsZip instance had still an handle on it.
+* minor enhancement: now raise a TbsZip error if `Flush()` attempts to overwrite the current archive.
+* minor enhancement: property `DisplayError` is set to true by default.
 
 Version 2.3, date: 2010-11-29
-* minor bug fixed: an archive created with both methods ˋCreateNew()ˋ and ˋFlush(TBSZIP_DOWNLOAD)ˋ could be truncated because the final size of the archive was badly estimated.
+* minor bug fixed: an archive created with both methods `CreateNew()` and `Flush(TBSZIP_DOWNLOAD)` could be truncated because the final size of the archive was badly estimated.
 
 Version 2.2, date: 2010-10-28
-* major bug fixed: some added or modified files can be saved in the archive with a wrong CRC control code. This could make  softwares to consider the file or the archive as corrupted. Only few CRC codes are wrongly saved, thus the bug is rare and can seem to appear randomly.
+* major bug fixed: some added or modified files can be saved in the archive with a wrong CRC control code. This could make softwares to consider the file or the archive as corrupted. Only few CRC codes are wrongly saved, thus the bug is rare and can seem to appear randomly.
 
 Version 2.1, date: 2010-07-01
 * bug fixed: when adding a new file in the archive, the time of the file was wrong (date was ok)
 * TbsZip now changes the date and time of a file in the archive when the file content is replaced
-* new method ˋCreateNew()ˋ
+* new method `CreateNew()`
 
 
 Contact and license
