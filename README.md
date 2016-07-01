@@ -48,7 +48,7 @@ Limitations
 Example
 -------
 
-ˋ``php
+```php
 $zip = new clsTbsZip(); // instantiate the class
 
 $zip->Open('archive1.zip'); // open an existing zip archive
@@ -68,7 +68,7 @@ $zip->FileAdd('subfile4.txt', $txt3, TBSZIP_STRING); // add a new sub-file
 $zip->Flush(TBSZIP_FILE, 'archive1_new.zip'); // flush the modifications as a new archive
 
 $zip->Close(); // close the current archive
-`ˋ`
+```
 
 
 Synopsis
@@ -76,9 +76,9 @@ Synopsis
 
 Class name: `clsTbsZip`
 
-``ˋphp
+```php
 Open($ArchFile, $UseIncludePath=false)
-``ˋ
+```
 Open an original Zip archive (it can be an LibreOffice document, an MS Office
 document or any other Zip archive).
 
@@ -87,9 +87,9 @@ Versioning:
 * argument `$UseIncludePath` is supported since TbsZip version 2.12
 
 
-``ˋphp
+```php
 CreateNew()
-``ˋ
+```
 Create a new empty Zip archive. The new archive is virtually prepared in the PHP
 memory, nothing is written at this point. Methods `FileExists()`, `FileRead()`
 and `FileReplace()` cannot be used when you work on an new archive created by
@@ -100,26 +100,26 @@ Versioning:
 * method `CreateNew()` is supported since TbsZip version 2.1
 
 
-``ˋphp
+```php
 FileExists($NameOrIdx)
-``ˋ
+```
 Return `true` if the file exists in the original archive. `$NameOrIdx` must be
 the full name (including  folder name inside the archive) or the index of an
 existing file in the archive.
 
 
-``ˋphp
+```php
 FileRead($NameOrIdx, $Uncompress=true)
-``ˋ
+```
 Return the contents of the file stored in the original archive. If `$Uncompress`
 is `true`, then TbsZip tryies to uncompressed the contents if needed. If the
 file is compressed but TbsZip cannot uncompress it then an error is raised. You
 can check if the result is compressed using property `LastReadComp`.
 
 
-``ˋphp
+```php
 FileReplace($NameOrIdx, $Data, $DataType=TBSZIP_STRING, $Compress=true)
-``ˋ
+```
 Replace or delete an existing file in the archive. Set `$Data=false` in order
 to delete the file. `$DataType` accepts `TBSZIP_STRING` and `TBSZIP_FILE`
 (`$Data` must then be the path of the external file to insert). `$Compress`
@@ -142,9 +142,9 @@ output on the fly and one by one when method `Flush()` is called. Thus, you can
 add lot of files in an archive without occupying the PHP memory.
 
 
-``ˋphp
+```php
 FileAdd($Name, $Data, $DataType=TBSZIP_STRING, $Compress=true)
-``ˋ
+```
 Add a new file in the archive, works like `FileReplace()`. *Note that the original
 archive is not modified, modifications will be provided as a new archive when you
 call the method `Flush()`.*
@@ -152,16 +152,16 @@ call the method `Flush()`.*
 If `$Data` is `false` then the previously add file with the given name is canceled if any.
 
 
-``ˋphp
+```php
 FileCancelModif($NameOrIdx)
-``ˋ
+```
 Cancel add, delete and replacements in the archive for the given file name. Return
 the number of cancels.
 
 
-``ˋphp
+```php
 FileGetState($NameOrIdx)
-``ˋ
+```
 Return a string that represents the state of the file in the archive:
 
 | Return value | Description |
@@ -173,9 +173,9 @@ Return a string that represents the state of the file in the archive:
 | `false`      | The file is not found in the archive  |
 
 
-``ˋphp
+```php
 Flush($Render=TBSZIP_DOWNLOAD, $File='', $ContentType='')
-``ˋ
+```
 Actually create the new archive with all modifications. External files to be
 inserted as sub-files are loaded during this proces and not before. They are
 compressed and output on the fly and one by one without staying in the  PHP
@@ -189,40 +189,40 @@ memory. No temporay files are used.
 | `TBSZIP_STRING` | will make method `Flush()` to return the new archive as a binary string |
 
 
-``ˋphp
+```php
 Debug()
-``ˋ
+```
 Display information about the original archive.
 
 
-``ˋphp
+```php
 Close()
-``ˋ
+```
 Close the opened original archive.
 
 
-``ˋphp
+```php
 ArchFile
-``ˋ
+```
 Full path of  the opened original archive.
 
 
-``ˋphp
+```php
 CdFileLst
-``ˋ
+```
 An array listing all existing files in the original archive with some technical
 information.
 
 
-``ˋphp
+```php
 LastReadIdx
-``ˋ
+```
 Index of the last file read by `FileRead()`. `false` means the file was not found in the archive.
 
 
-``ˋphp
+```php
 LastReadComp
-``ˋ
+```
 Compression information about of the last file read by `FileRead()`.
 
 * `false` means the file was not found in the archive,
@@ -231,9 +231,9 @@ Compression information about of the last file read by `FileRead()`.
 * `1` means the file was compressed but TbsZip was unable to uncompress.
 
 
-``ˋphp
+```php
 DisplayError
-``ˋ
+```
 Default value is `false` until version 2.3, and `true` since version 2.4.
 
 If the value is `true`, TbsZip error messages are displayed (using `echo`).
@@ -244,9 +244,9 @@ the new archive with the Download option, the error message may be merged to
 the downloaded file.
 
 
-``ˋphp
+```php
 Error
-``ˋ
+```
 Last error message, or `false` if no TbsZip error. Use this property in order to
 check errors when property `DisplayError` is set to `false`.
 
