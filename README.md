@@ -48,7 +48,7 @@ Limitations
 Example
 -------
 
-``php
+ˋ``php
 $zip = new clsTbsZip(); // instantiate the class
 
 $zip->Open('archive1.zip'); // open an existing zip archive
@@ -68,7 +68,7 @@ $zip->FileAdd('subfile4.txt', $txt3, TBSZIP_STRING); // add a new sub-file
 $zip->Flush(TBSZIP_FILE, 'archive1_new.zip'); // flush the modifications as a new archive
 
 $zip->Close(); // close the current archive
-``
+`ˋ`
 
 
 Synopsis
@@ -76,9 +76,9 @@ Synopsis
 
 Class name: `clsTbsZip`
 
-``php
+``ˋphp
 Open($ArchFile, $UseIncludePath=false)
-``
+``ˋ
 Open an original Zip archive (it can be an LibreOffice document, an MS Office
 document or any other Zip archive).
 
@@ -87,9 +87,9 @@ Versioning:
 * argument `$UseIncludePath` is supported since TbsZip version 2.12
 
 
-``php
+``ˋphp
 CreateNew()
-``
+``ˋ
 Create a new empty Zip archive. The new archive is virtually prepared in the PHP
 memory, nothing is written at this point. Methods `FileExists()`, `FileRead()`
 and `FileReplace()` cannot be used when you work on an new archive created by
@@ -100,26 +100,26 @@ Versioning:
 * method `CreateNew()` is supported since TbsZip version 2.1
 
 
-``php
+``ˋphp
 FileExists($NameOrIdx)
-``
+``ˋ
 Return `true` if the file exists in the original archive. `$NameOrIdx` must be
 the full name (including  folder name inside the archive) or the index of an
 existing file in the archive.
 
 
-``php
+``ˋphp
 FileRead($NameOrIdx, $Uncompress=true)
-``
+``ˋ
 Return the contents of the file stored in the original archive. If `$Uncompress`
 is `true`, then TbsZip tryies to uncompressed the contents if needed. If the
 file is compressed but TbsZip cannot uncompress it then an error is raised. You
 can check if the result is compressed using property `LastReadComp`.
 
 
-``php
+``ˋphp
 FileReplace($NameOrIdx, $Data, $DataType=TBSZIP_STRING, $Compress=true)
-``
+``ˋ
 Replace or delete an existing file in the archive. Set `$Data=false` in order
 to delete the file. `$DataType` accepts `TBSZIP_STRING` and `TBSZIP_FILE`
 (`$Data` must then be the path of the external file to insert). `$Compress`
@@ -142,9 +142,9 @@ output on the fly and one by one when method `Flush()` is called. Thus, you can
 add lot of files in an archive without occupying the PHP memory.
 
 
-``php
+``ˋphp
 FileAdd($Name, $Data, $DataType=TBSZIP_STRING, $Compress=true)
-``
+``ˋ
 Add a new file in the archive, works like `FileReplace()`. *Note that the original
 archive is not modified, modifications will be provided as a new archive when you
 call the method `Flush()`.*
@@ -152,16 +152,16 @@ call the method `Flush()`.*
 If `$Data` is `false` then the previously add file with the given name is canceled if any.
 
 
-``php
+``ˋphp
 FileCancelModif($NameOrIdx)
-``
+``ˋ
 Cancel add, delete and replacements in the archive for the given file name. Return
 the number of cancels.
 
 
-``php
+``ˋphp
 FileGetState($NameOrIdx)
-``
+``ˋ
 Return a string that represents the state of the file in the archive:
 
 | Return value | Description |
@@ -173,9 +173,9 @@ Return a string that represents the state of the file in the archive:
 | `false`      | The file is not found in the archive  |
 
 
-``php
+``ˋphp
 Flush($Render=TBSZIP_DOWNLOAD, $File='', $ContentType='')
-``
+``ˋ
 Actually create the new archive with all modifications. External files to be
 inserted as sub-files are loaded during this proces and not before. They are
 compressed and output on the fly and one by one without staying in the  PHP
@@ -189,40 +189,40 @@ memory. No temporay files are used.
 | `TBSZIP_STRING` | will make method `Flush()` to return the new archive as a binary string |
 
 
-``php
+``ˋphp
 Debug()
-``
+``ˋ
 Display information about the original archive.
 
 
-``php
+``ˋphp
 Close()
-``
+``ˋ
 Close the opened original archive.
 
 
-``php
+``ˋphp
 ArchFile
-``
+``ˋ
 Full path of  the opened original archive.
 
 
-``php
+``ˋphp
 CdFileLst
-``
+``ˋ
 An array listing all existing files in the original archive with some technical
 information.
 
 
-``php
+``ˋphp
 LastReadIdx
-``
+``ˋ
 Index of the last file read by `FileRead()`. `false` means the file was not found in the archive.
 
 
-``php
+``ˋphp
 LastReadComp
-``
+``ˋ
 Compression information about of the last file read by `FileRead()`.
 
 * `false` means the file was not found in the archive,
@@ -231,9 +231,9 @@ Compression information about of the last file read by `FileRead()`.
 * `1` means the file was compressed but TbsZip was unable to uncompress.
 
 
-``php
+``ˋphp
 DisplayError
-``
+``ˋ
 Default value is `false` until version 2.3, and `true` since version 2.4.
 
 If the value is `true`, TbsZip error messages are displayed (using `echo`).
@@ -244,9 +244,9 @@ the new archive with the Download option, the error message may be merged to
 the downloaded file.
 
 
-``php
+``ˋphp
 Error
-``
+``ˋ
 Last error message, or `false` if no TbsZip error. Use this property in order to
 check errors when property `DisplayError` is set to `false`.
 
@@ -254,85 +254,66 @@ check errors when property `DisplayError` is set to `false`.
 Change log
 ----------
 
-<p>Version 2.16, date: 2014-04-08</p>
-<ul>
-  <li>bug fixe: could not download a file that has the same name as the opened archive.</li>
-</ul>
-<p>Version 2.15, date:  2013-10-15</p>
-<ul>
-  <li>Archives with comment can now be opened by TbsZip.</li>
-  <li>Clearer error messages for PHP in CLI mode.</li>
-  <li>Clearer error messages for the interconnection with OpenTBS.</li>
-</ul>
-<p>Version 2.14, date:  2013-06-11</p>
-<ul>
-  <li>can open an archive from a PHP file handle</li>
-</ul>
-<p>Version 2.13, date: 2013-04-14</p>
-<ul>
-  <li> new  method <span class="code">FileGetState()</span></li>
-</ul>
-<p>Version 2.12, date: 2013-03-16</p>
-<ul>
-  <li> bug fixed: may produce a corrupted archive when the original was using data descriptors without the signature.</li>
-  <li> minor  enhancement: new argument $UseIncludePath.</li>
-  <li>minor  enhancement: debug mode is smarter.</li>
-</ul>
-<p>Version 2.11, date: 2011-02-14</p>
-<ul>
-  <li>    bug fixed: method FileCancelModif() doesn't cancel added files.</li>
-</ul>
-<p>Version 2.10, date: 2011-08-13
-</p>
-<ul>
-  <li>    bug fixed: PHP warning <span class="warning">&quot;Notice: Undefined variable: AddDataLen...&quot;</span> happens when deleting a file whitout adding any file.
-  </li>
-</ul>
-<p>Version 2.9, date: 2011-07-22</p>
-<ul>
-  <li> bug fixed: a minor bug on FileRead when the asked file does not exists.</li>
-</ul>
-<p>Version 2.8, date: 2011-06-08</p>
-<ul>
-  <li> bug fixed: PHP warning <span class="warning">&quot;Warning: fclose(): 10 is not a valid stream resource&quot;</span> may happen when closing an archive twice.</li>
-</ul>
-<p>Version 2.7, date: 2011-06-07</p>
-<ul>
-  <li> bug fixed: PHP error <span class="warning">&quot;supplied argument is not a valid stream resource&quot;</span> or <span class="warning">&quot;Undefined property: clsOpenTBS::$OutputHandle&quot;</span> may happen when using method Flush().</li>
-</ul>
-<p>Version 2.6, date: 2011-06-07
-</p>
-<ul>
-  <li> minor  enhancement: now raise a TbsZip error if <span class="value">Flush()</span> attempts to overwrite a locked file.
-  </li>
-</ul>
-<p>Version 2.5, date: 2011-05-12  </p>
-<ul>
-  <li> minor  bug fixed: strict compatibility with PHP 5 (no PHP warning with error reporting E_STRICT)</li>
-</ul>
-<p>  Version 2.4, date: 2011-03-25  </p>
-<ul>
-  <li> minor  bug fixed: the new created archive using <span class="value">Flush()</span> was not unlocked at the end of the flush. The clsTbsZip instance had still an handle on it.</li>
-  <li> minor  enhancement: now raise a TbsZip error if <span class="value">Flush()</span> attempts to overwrite the current archive.</li>
-  <li> minor  enhancement: property <span class="value">DisplayError</span> is set to true by default. </li>
-</ul>
-<p> Version 2.3, date: 2010-11-29</p>
-<ul>
-  <li> minor  bug fixed:  an archive created with both methods <span class="value">CreateNew()</span> and <span class="value">Flush(TBSZIP_DOWNLOAD)</span> could be truncated because the final size of the archive was badly estimated.</li>
-</ul>
-<p> Version 2.2, date: 2010-10-28</p>
-<ul>
-  <li> major bug fixed: some added or modified files can be saved in the archive with a wrong CRC control code. This could make  softwares to consider the file or the archive as corrupted. Only few CRC codes are wrongly saved, thus the bug is rare and can seem to appear randomly.</li>
-</ul>
-<p> Version 2.1, date: 2010-07-01</p>
-<ul>
-  <li> bug fixed: when adding a new file in the archive, the time of the file was wrong (date was ok)</li>
-  <li> TbsZip now changes the date and time of a file in the archive when the file content is replaced</li>
-  <li> new method <span class="value">CreateNew()</span></li>
-</ul>
-<h2><a name="misc" id="intro5"></a>7. Contact and license</h2>
-<p>Author: <a href="http://www.tinybutstrong.com/onlyyou.html">Skrol29</a></p>
-<p>License: <a href="http://www.gnu.org/licenses/lgpl.html">LGLP</a></p>
-</body>
-</html>
+Version 2.16, date: 2014-04-08
+* bug fixe: could not download a file that has the same name as the opened archive.
 
+Version 2.15, date:  2013-10-15
+* Archives with comment can now be opened by TbsZip.
+* Clearer error messages for PHP in CLI mode.
+* Clearer error messages for the interconnection with OpenTBS.
+
+Version 2.14, date:  2013-06-11
+* can open an archive from a PHP file handle
+
+Version 2.13, date: 2013-04-14
+* new  method ˋFileGetState()ˋ
+
+Version 2.12, date: 2013-03-16
+* bug fixed: may produce a corrupted archive when the original was using data descriptors without the signature.
+* minor enhancement: new argument ˋ$UseIncludePathˋ.
+* minor enhancement: debug mode is smarter.
+
+Version 2.11, date: 2011-02-14
+* bug fixed: method ˋFileCancelModif()ˋ doesn't cancel added files.
+
+Version 2.10, date: 2011-08-13
+* bug fixed: PHP warning *"Notice: Undefined variable: AddDataLen..."* happens when deleting a file whitout adding any file.
+
+Version 2.9, date: 2011-07-22
+* bug fixed: a minor bug on ˋFileRead()ˋ when the asked file does not exists.
+
+Version 2.8, date: 2011-06-08
+* bug fixed: PHP warning *"Warning: fclose(): 10 is not a valid stream resource"* may happen when closing an archive twice.
+
+Version 2.7, date: 2011-06-07
+* bug fixed: PHP error *"supplied argument is not a valid stream resource"* or *"Undefined property: clsOpenTBS::$OutputHandle"* may happen when using method ˋFlush()ˋ.
+
+Version 2.6, date: 2011-06-07
+* minor enhancement: now raise a TbsZip error if ˋFlush()ˋ attempts to overwrite a locked file.
+
+Version 2.5, date: 2011-05-12
+* minor bug fixed: strict compatibility with PHP 5 (no PHP warning with error reporting E_STRICT)
+
+Version 2.4, date: 2011-03-25
+* minor bug fixed: the new created archive using ˋFlush()ˋ was not unlocked at the end of the flush. The clsTbsZip instance had still an handle on it.
+* minor enhancement: now raise a TbsZip error if ˋFlush()ˋ attempts to overwrite the current archive.
+* minor enhancement: property ˋDisplayErrorˋ is set to true by default.
+
+Version 2.3, date: 2010-11-29
+* minor bug fixed: an archive created with both methods ˋCreateNew()ˋ and ˋFlush(TBSZIP_DOWNLOAD)ˋ could be truncated because the final size of the archive was badly estimated.
+
+Version 2.2, date: 2010-10-28
+* major bug fixed: some added or modified files can be saved in the archive with a wrong CRC control code. This could make  softwares to consider the file or the archive as corrupted. Only few CRC codes are wrongly saved, thus the bug is rare and can seem to appear randomly.
+
+Version 2.1, date: 2010-07-01
+* bug fixed: when adding a new file in the archive, the time of the file was wrong (date was ok)
+* TbsZip now changes the date and time of a file in the archive when the file content is replaced
+* new method ˋCreateNew()ˋ
+
+
+Contact and license
+-------------------
+
+Author: [Skrol29](http://www.tinybutstrong.com/onlyyou.html)
+
+License: [LGPL](http://www.gnu.org/licenses/lgpl.html)
