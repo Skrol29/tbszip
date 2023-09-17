@@ -6,7 +6,7 @@ All notable changes to this project will be documented in this file.
 
 ### Enhancements
 
-- PHP 8.2 compatibilty
+- PHP 8.2 compatibility 
 
 ### Added
 
