@@ -72,4 +72,4 @@ $zip->Flush(TBSZIP_DOWNLOAD+TBSZIP_NOHEADER);
 // Close the archive
 // -----------------
 
-$zip->Close(); // stop to work with the opened archive. Modifications are not applied to the opened archive, use Flush() to commit  
+$zip->Close(); // stop to work with the opened archive. Modifications are not applied to the opened archive, use Flush() to commit
