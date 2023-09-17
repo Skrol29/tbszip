@@ -1,8 +1,8 @@
 <?php
 
 /*
-TbsZip version 2.16
-Date    : 2014-04-08
+TbsZip version 2.17
+Date    : 2023-09-17
 Author  : Skrol29 (email: http://www.tinybutstrong.com/onlyyou.html)
 Licence : LGPL
 This class is independent from any other classes and has been originally created for the OpenTbs plug-in
@@ -17,6 +17,31 @@ define('TBSZIP_STRING',32);    // output to string, or add from string
 
 class clsTbsZip {
 
+	public $Meth8Ok;
+	public $DisplayError;
+	public $ArchFile;
+	public $Error;
+	
+	// Compatibility PHP 8.2
+	public $ArchHnd;
+	public $ArchIsNew;
+	public $CdEndPos;
+	public $CdPos;
+	public $CdInfo;
+	public $ArchIsStream;
+	public $CdFileLst;
+	public $CdFileNbr;
+	public $CdFileByName;
+	public $VisFileLst;
+	public $LastReadComp;
+	public $LastReadIdx;
+	public $ReplInfo;
+	public $ReplByPos;
+	public $AddInfo;
+	public $OutputMode;
+	public $OutputHandle;
+	public $OutputSrc;
+
 	function __construct() {
 		$this->Meth8Ok = extension_loaded('zlib'); // check if Zlib extension is available. This is need for compress and uncompress with method 8.
 		$this->DisplayError = true;
@@ -24,8 +49,10 @@ class clsTbsZip {
 		$this->Error = false;
 	}
 
+	/**
+	 * Create a new virtual empty archive, the name will be the default name when the archive is flushed.
+	 */
 	function CreateNew($ArchName='new.zip') {
-	// Create a new virtual empty archive, the name will be the default name when the archive is flushed.
 		if (!isset($this->Meth8Ok)) $this->__construct();  // for PHP 4 compatibility
 		$this->Close(); // note that $this->ArchHnd is set to false here
 		$this->Error = false;
@@ -37,15 +64,23 @@ class clsTbsZip {
 		$this->CdPos = $this->CdInfo['p_cd'];
 	}
 
+	/**
+	 * Open the zip archive
+	 */
 	function Open($ArchFile, $UseIncludePath=false) {
-	// Open the zip archive
+
 		if (!isset($this->Meth8Ok)) $this->__construct();  // for PHP 4 compatibility
 		$this->Close(); // close handle and init info
 		$this->Error = false;
 		$this->ArchIsNew = false;
 		$this->ArchIsStream = (is_resource($ArchFile) && (get_resource_type($ArchFile)=='stream'));
 		if ($this->ArchIsStream) {
-			$this->ArchFile = 'from_stream.zip';
+			$info = stream_get_meta_data($ArchFile);
+			if (isset($info['uri'])) {
+				$this->ArchFile = $info['uri'];
+			} else {
+				$this->ArchFile = 'from_stream.zip';
+			}
 			$this->ArchHnd = $ArchFile;
 		} else {
 			// open the file
@@ -245,8 +280,10 @@ class clsTbsZip {
 		return ($this->FileGetIdx($NameOrIdx)!==false);
 	}
 
-	function FileGetIdx($NameOrIdx) {
-	// Check if a file name, or a file index exists in the Central Directory, and return its index
+	/**
+	 * Check if a file name, or a file index exists in the Central Directory, and return its index
+	 */
+	 function FileGetIdx($NameOrIdx) {
 		if (is_string($NameOrIdx)) {
 			if (isset($this->CdFileByName[$NameOrIdx])) {
 				return $this->CdFileByName[$NameOrIdx];
@@ -262,8 +299,10 @@ class clsTbsZip {
 		}
 	}
 
+	/**
+	 * Check if a file name exists in the list of file to add, and return its index
+	 */
 	function FileGetIdxAdd($Name) {
-	// Check if a file name exists in the list of file to add, and return its index
 		if (!is_string($Name)) return false;
 		$idx_lst = array_keys($this->AddInfo);
 		foreach ($idx_lst as $idx) {
@@ -310,8 +349,10 @@ class clsTbsZip {
 
 	}
 
+	/**
+	 * Read the file header (and maybe the data ) in the archive, assuming the cursor in at a new file position
+	 */
 	function _ReadFile($idx, $ReadData) {
-	// read the file header (and maybe the data ) in the archive, assuming the cursor in at a new file position
 
 		$b = $this->_ReadData(30);
 
@@ -389,8 +430,10 @@ class clsTbsZip {
 
 	}
 
+	/**
+	 * Store replacement information.
+	 */
 	function FileReplace($NameOrIdx, $Data, $DataType=TBSZIP_STRING, $Compress=true) {
-	// Store replacement information.
 
 		$idx = $this->FileGetIdx($NameOrIdx);
 		if ($idx===false) return $this->RaiseError('File "'.$NameOrIdx.'" is not found in the Central Directory.');
@@ -442,9 +485,11 @@ class clsTbsZip {
 
 	}
 
+	/**
+	 * Cancel added, modified or deleted modifications on a file in the archive.
+	 * @return integer The number of cancellations.
+	 */
 	function FileCancelModif($NameOrIdx, $ReplacedAndDeleted=true) {
-	// cancel added, modified or deleted modifications on a file in the archive
-	// return the number of cancels
 
 		$nbr = 0;
 
@@ -582,8 +627,8 @@ class clsTbsZip {
 		}
 		$this->OutputFromString($b2);
 		$ArchPos += $old_cd_len;
- 		$DeltaCdLen =  $DeltaCdLen + strlen($b2) - $old_cd_len;
- 
+		$DeltaCdLen =  $DeltaCdLen + strlen($b2) - $old_cd_len;
+
 		// Output until "end of central directory record"
 		if ($this->ArchHnd!==false) $this->OutputFromArch($ArchPos, $this->CdEndPos); // ArchHnd is false if CreateNew() has been called
 
@@ -600,7 +645,7 @@ class clsTbsZip {
 		// Output "end of central directory record"
 		$b2 = $this->CdInfo['bin'];
 		$DelNbr = count($DelLst);
-		if ( ($AddNbr>0) or ($DelNbr>0) ) {
+		if ( ($AddNbr>0) || ($DelNbr>0) ) {
 			// total number of entries in the central directory on this disk
 			$n = $this->_GetDec($b2, 8, 2);
 			$this->_PutDec($b2, $n + $AddNbr - $DelNbr,  8, 2);
@@ -938,8 +983,10 @@ class clsTbsZip {
 
 	}
 
+	/**
+	 * Returns the real size of data
+	 */
 	function _DataPrepare(&$Ref) {
-	// returns the real size of data
 		if ($Ref['path']!==false) {
 			$Ref['data'] = file_get_contents($Ref['path']);
 			if ($Ref['crc32']===false) $Ref['crc32'] = crc32($Ref['data']);
@@ -951,8 +998,10 @@ class clsTbsZip {
 		}
 	}
 
-	function _EstimateNewArchSize($Optim=true) {
-	// Return the size of the new archive, or false if it cannot be calculated (because of external file that must be compressed before to be insered)
+	/**
+	 * Return the size of the new archive, or false if it cannot be calculated (because of external file that must be compressed before to be insered)
+	 */
+	 function _EstimateNewArchSize($Optim=true) {
 
 		if ($this->ArchIsNew) {
 			$Len = strlen($this->CdInfo['bin']);
