@@ -44,7 +44,7 @@ body,td,th {
   <body>
     <h1>TbsZip - a zip modifier for PHP</h1>
     <div>version 2.17, 2023-09-17, by Skrol29<br />
-      document updated on 2014-04-08</div>
+      document updated on 2024-03-06</div>
     <ol>
       <li><a href="#intro">Introduction</a></li>
       <li><a href="#features">Features</a></li>
@@ -310,8 +310,39 @@ $zip-&gt;Close(); <span class="versioning">// close the current archive</span>
         </tr>
         <tr>
           <td class="code" valign="top">CdFileLst</td>
-          <td valign="top"> An array listing all existing files in the original
-            archive with some technical information.</td>
+          <td valign="top">The Central Directory meta data.<br />
+            That is an array listing all existing files in the original archive
+            with some technical information.<br />
+            Synopsis :<br />
+            <div class="value"> array( <br />
+                idx1 =&gt; array(<br />
+                  'v_name' =&gt; '...', // name of the file<br />
+                  'v_comm' =&gt; '...', // comment<br />
+                  'date' =&gt; '...', // date<br />
+                  'time' =&gt; '...', // time<br />
+                  ...,<br />
+                ),<br />
+                idx2 =&gt; array(...),<br />
+                ...<br />
+              )<br />
+              <br />
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td class="code" valign="top">CdFileByName</td>
+          <td valign="top">The Central Directory files, where keys are the file
+            names, and values are the file indexes.<br />
+            Synopsis :<br />
+            <div class="value"> array( <br />
+                'file_name_1.txt' =&gt; 1,<br />
+                'file_name_2.txt' =&gt; 2,<br />
+                'file_name_3.txt' =&gt; 3,<br />
+                ...<br />
+              )<br />
+              <br />
+            </div>
+          </td>
         </tr>
         <tr>
           <td class="code" valign="top">LastReadIdx</td>
