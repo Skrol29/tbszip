@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.18] - 2025-11-01
+
+### Fixed
+
+- Sanitizing error messages.
+
 ## [2.17] - 2023-09-17
 
 ### Enhancements
